@@ -1,0 +1,93 @@
+package Application;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.sql.SQLException;
+import java.util.Random;
+import java.util.Timer;
+import conexaopostgress.DB;
+
+public class Main {
+	
+public static void main(String[] args) {
+		
+		
+		long tempoInicial = System.currentTimeMillis();
+        
+        Timer timer1 = new Timer();
+        Timer timer2 = new Timer();
+		Random g = new Random();
+		
+		Connection conn = null;
+		PreparedStatement st = null;
+		int x;
+		int i;
+		Cadastro c = new Cadastro();
+		//String[] nome = {"Jõao","Maria","Marcos","Helena","Jonas","Hercules","Clara","Suzana","Mozila","Edegar"};
+		//String[] sobrenome = {"Silva","Souza","Loren","Turing","Machado","Schaeffer","Santos","Pendragon","Potter","Weslay"};
+				
+		
+		
+		/*for(i = 0; i < 10; i++) {
+			
+			System.out.println("Nome: "+nome[i] +" sobrenome: " + sobrenome[g.toString(i)]);
+			
+		}*/
+				try {
+					conn = DB.getConnection();
+					
+			       for(i = 0; i <=10000; i++) {
+			    	   
+			    	   x = g.nextInt(1000000);
+			    	   
+			    	   st = conn.prepareStatement("INSERT INTO dados"
+								+ " (id_dado , nome , numero) "
+								+ "VALUES"
+								+ " (?,?,?)");
+
+			    	   st.setInt(1, i);
+			    	   st.setString(2, "Jean da Silva");
+			    	   st.setInt(3, x);
+			    	   
+			    	   st.execute();
+			    	   
+			    	   st = conn.prepareStatement("INSERT INTO endereco"
+								+ " ( endereco) "
+								+ "VALUES"
+								+ " (?) ");
+			    	  // st.setInt(1, i);
+			    	   st.setString(1, "rua utf");
+			    	   st.execute();
+			    	   
+			       }
+					
+					int rowsAffected = st.executeUpdate();
+					
+					System.out.println("numeros alocado");
+				}
+				
+				catch (SQLException e) {
+					e.printStackTrace();
+					System.out.println("pega catch");
+				}
+				finally {
+					DB.closeConnection();
+				}
+				
+				long tempoFinal = System.currentTimeMillis();
+				
+				
+				double tempo = (tempoFinal - tempoInicial) /1000 ;
+				double minutos = tempo / 60;
+				double horas = minutos / 60;
+				
+				System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+				System.out.println("Tempo de execução: " + tempo + " Segundos ");
+				System.out.println("Tempo de execução: " + minutos + " Minutos ");
+				System.out.println("Tempo de execução: " + horas + " Horas ");
+				
+				
+	}
+
+}

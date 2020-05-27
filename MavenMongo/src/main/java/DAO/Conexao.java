@@ -1,0 +1,174 @@
+package DAO;
+
+import java.util.Calendar;
+import java.util.Random;
+
+import org.bson.Document;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
+
+
+public class Conexao {
+	
+	
+	//Utilizando MongoClient para ter acesso ao banco
+	MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
+	
+	// Pegando a base de dados
+    MongoDatabase database = mongoClient.getDatabase("dados");
+	
+	
+    // Pegando a parte do Collection dentro da base de dados
+    MongoCollection<Document> coll = database.getCollection("dados");
+    
+    
+    
+    public void inserir(int op) {
+    	
+    	long tempoInicial = System.currentTimeMillis();
+    	
+    	int x;
+    	int i;
+		int se;
+        int min;
+        int ho;
+        Calendar data;
+        
+        coll.drop();
+        
+        Random r = new Random();
+        
+        for ( i = 0; i < op; i++) {
+        	
+        	x = r.nextInt(100000000); 
+        	Document doc = new Document("Id", i)
+        			.append("Nome", "nomeusuario")
+                    .append("Numero", x)
+                    .append("Endereco", "Rua Brasil");
+        	
+        	coll.insertOne(doc);
+			
+		}
+        
+        long tempoFinal = System.currentTimeMillis();
+		
+		
+		double tempo = (tempoFinal - tempoInicial) /1000 ;
+		double minutos = tempo / 60;
+		double horas = minutos / 60;
+					
+		System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+		System.out.println("Tempo de execução: " + tempo + " Segundos ");
+		System.out.println("Tempo de execução: " + minutos + " Minutos ");
+		System.out.println("Tempo de execução: " + horas + " Horas ");
+        
+        data = Calendar.getInstance();
+        ho = data.get(Calendar.HOUR_OF_DAY);
+        min = data.get(Calendar.MINUTE);
+        se = data.get(Calendar.SECOND);
+        System.out.println(ho + ":" + min + ":" + se);
+        
+        mongoClient.close();
+    	
+    }
+    
+    
+    public void Atualizar(int op) {
+    	
+    	long tempoInicial = System.currentTimeMillis();
+    	
+    	int x;
+    	int i;
+		int se;
+        int min;
+        int ho;
+        Calendar data;
+        
+        
+        Random r = new Random();
+
+        for ( i = 0; i < op; i++) {
+        	
+        	//x = r.nextInt(100000000); 
+        	coll.updateOne(eq("Nome", "Jean"), set("Nome", "Carlos"));
+        	coll.updateOne(eq("Endereco", "Rua dos alfineiros"), set("Endereco", "Rua Principal"));
+        	System.out.println(i);
+
+		}
+        
+        long tempoFinal = System.currentTimeMillis();
+		
+		
+		double tempo = (tempoFinal - tempoInicial) /1000 ;
+		double minutos = tempo / 60;
+		double horas = minutos / 60;
+					
+		System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+		System.out.println("Tempo de execução: " + tempo + " Segundos ");
+		System.out.println("Tempo de execução: " + minutos + " Minutos ");
+		System.out.println("Tempo de execução: " + horas + " Horas ");
+        
+        data = Calendar.getInstance();
+        ho = data.get(Calendar.HOUR_OF_DAY);
+        min = data.get(Calendar.MINUTE);
+        se = data.get(Calendar.SECOND);
+        System.out.println(ho + ":" + min + ":" + se);
+        
+        mongoClient.close();
+    	
+    }
+    
+    
+public void Deletar(int op) {
+    	
+    	long tempoInicial = System.currentTimeMillis();
+    	
+    	int x;
+    	int i;
+		int se;
+        int min;
+        int ho;
+        Calendar data;
+        
+        
+        Random r = new Random();
+
+        for ( i = 0; i < op; i++) {
+        	
+        	//x = r.nextInt(100000000); 
+        	DeleteResult deletar = coll.deleteMany(eq("Id", i));
+        	System.out.println(i);
+
+		}
+        
+        long tempoFinal = System.currentTimeMillis();
+		
+		
+		double tempo = (tempoFinal - tempoInicial) /1000 ;
+		double minutos = tempo / 60;
+		double horas = minutos / 60;
+					
+		System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+		System.out.println("Tempo de execução: " + tempo + " Segundos ");
+		System.out.println("Tempo de execução: " + minutos + " Minutos ");
+		System.out.println("Tempo de execução: " + horas + " Horas ");
+        
+        data = Calendar.getInstance();
+        ho = data.get(Calendar.HOUR_OF_DAY);
+        min = data.get(Calendar.MINUTE);
+        se = data.get(Calendar.SECOND);
+        System.out.println(ho + ":" + min + ":" + se);
+        
+        mongoClient.close();
+    	
+    }
+}

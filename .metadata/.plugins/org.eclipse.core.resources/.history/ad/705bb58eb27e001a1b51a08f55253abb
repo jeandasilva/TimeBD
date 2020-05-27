@@ -1,0 +1,136 @@
+package Controller;
+
+import java.util.Random;
+import java.util.Timer;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+import antlr.collections.List;
+import modelo.base.Endereco;
+import modelo.base.Usuario;
+
+public class DAO <E> {
+	
+	private static EntityManagerFactory emf;
+	private EntityManager em; 
+	
+	static {
+		try {
+			emf = Persistence.createEntityManagerFactory("dados");
+			
+		}catch(Exception e) {
+			//...
+		}
+	}
+	
+	public DAO() {
+		em = emf.createEntityManager();
+		
+	}
+	
+	
+	public void Inserir() {
+		
+		long tempoInicial = System.currentTimeMillis();
+        
+	        Timer timer1 = new Timer();
+	        Timer timer2 = new Timer();
+			
+			 int i;
+			 int x;
+			 
+			Random r = new Random();
+			
+			EntityManagerFactory emf = Persistence.createEntityManagerFactory("dados");
+			
+			EntityManager em = emf.createEntityManager();
+			
+			for(i = 1; i < 100001; i++) {
+				
+				x = r.nextInt(100000000);
+				Endereco ma = new Endereco("rua utf");
+				Usuario main = new Usuario("jean",x, ma);
+				
+				em.getTransaction().begin();
+				em.persist(main);
+				em.getTransaction().commit();
+			
+			}
+			
+			em.close();
+			emf.close();
+			
+			long tempoFinal = System.currentTimeMillis();
+			
+			
+			double tempo = (tempoFinal - tempoInicial) /1000 ;
+			double minutos = tempo / 60;
+			double horas = minutos / 60;
+			
+			System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+			System.out.println("Tempo de execução: " + tempo + " Segundos ");
+			System.out.println("Tempo de execução: " + minutos + " Minutos ");
+			System.out.println("Tempo de execução: " + horas + " Horas ");
+		
+	}
+	
+	
+	public void Atualizar() {
+		
+		long tempoInicial = System.currentTimeMillis();
+		        
+		        Timer timer1 = new Timer();
+		        Timer timer2 = new Timer();
+				
+				 int i;
+				 int x;
+				 
+				
+				 
+				 Random r = new Random();
+				
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("dados");
+				
+				EntityManager em = emf.createEntityManager();
+				
+				
+				
+				for(i = 1; i < 101; i++) {
+					
+					x = r.nextInt(1000000000);
+					Usuario usuario = em.find(Usuario.class, i);
+					usuario.setNome("Aladdin");
+					usuario.setNumero(x);
+
+					 
+					em.merge(usuario);
+					 
+					em.getTransaction().begin();
+					em.getTransaction().commit();
+					
+				}
+				
+				em.close();
+				emf.close();
+				
+				long tempoFinal = System.currentTimeMillis();
+				
+				
+				double tempo = (tempoFinal - tempoInicial) /1000 ;
+				double minutos = tempo / 60;
+				double horas = minutos / 60;
+				
+				System.out.println("Tempo de execução: " + (tempoFinal - tempoInicial) + "  Millisegundos");
+				System.out.println("Tempo de execução: " + tempo + " Segundos ");
+				System.out.println("Tempo de execução: " + minutos + " Minutos ");
+				System.out.println("Tempo de execução: " + horas + " Horas ");
+		
+		
+	}
+	
+	
+}
