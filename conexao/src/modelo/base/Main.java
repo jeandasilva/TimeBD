@@ -14,7 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		int op = 0;
+		//int op = 0;
 		//int f;		
 		
 		DAO dao = new DAO();

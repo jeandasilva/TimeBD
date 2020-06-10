@@ -1,5 +1,6 @@
 package Controller;
 
+import java.util.Calendar;
 import java.util.Random;
 import java.util.Timer;
 
@@ -55,10 +56,13 @@ public class DAO <E> {
 				Endereco ma = new Endereco("rua utf");
 				Usuario main = new Usuario("Tony stark",x, ma);
 				
+				System.out.println(i);
+				
 				em.getTransaction().begin();
 				em.persist(main);
 				em.getTransaction().commit();
-			
+				
+				
 			}
 			
 			em.close();
@@ -81,7 +85,7 @@ public class DAO <E> {
 	public void Atualizar() {
 		
 		long tempoInicial = System.currentTimeMillis();
-		        
+		       
 		        Timer timer1 = new Timer();
 		        Timer timer2 = new Timer();
 				
@@ -135,7 +139,10 @@ public class DAO <E> {
 		
 		 int i;
 		 int x;
-		 
+		 int se;
+	     int min;
+	     int ho;
+	     Calendar data;
 		
 		 
 		 Random r = new Random();
@@ -150,13 +157,12 @@ public class DAO <E> {
 			
 			Usuario usuario = em.find(Usuario.class, i);
 			Endereco end = em.find(Endereco.class, i);
-			
-			if(usuario != null && end != null) {
+						
 				em.getTransaction().begin();
 				em.remove(usuario);
 				em.remove(end);
 				em.getTransaction().commit();
-			}
+			
 		}
 		
 		em.close();
@@ -173,6 +179,12 @@ public class DAO <E> {
 		System.out.println("Tempo de execução: " + tempo + " Segundos ");
 		System.out.println("Tempo de execução: " + minutos + " Minutos ");
 		System.out.println("Tempo de execução: " + horas + " Horas ");
+		
+		data = Calendar.getInstance();
+        ho = data.get(Calendar.HOUR_OF_DAY);
+        min = data.get(Calendar.MINUTE);
+        se = data.get(Calendar.SECOND);
+        System.out.println(ho + ":" + min + ":" + se);
 		
 	}
 }

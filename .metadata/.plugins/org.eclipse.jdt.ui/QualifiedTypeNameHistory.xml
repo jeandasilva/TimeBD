@@ -20,7 +20,6 @@
 <fullyQualifiedTypeName name="java.awt.List"/>
 <fullyQualifiedTypeName name="antlr.collections.List"/>
 <fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="com.mongodb.Mongo"/>
 <fullyQualifiedTypeName name="com.mongodb.DB"/>
 <fullyQualifiedTypeName name="com.mongodb.MongoException"/>
@@ -37,4 +36,5 @@
 <fullyQualifiedTypeName name="Model.Pessoa"/>
 <fullyQualifiedTypeName name="DAO.Conexao"/>
 <fullyQualifiedTypeName name="com.mongodb.client.result.DeleteResult"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
 </qualifiedTypeNameHistroy>
